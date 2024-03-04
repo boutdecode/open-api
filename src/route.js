@@ -54,7 +54,7 @@ class Route {
    */
   process (context, next, ...args) {
     const { req, res } = context
-    if (req.method === this.method && this._validPattern(req.uri, req)) {
+    if (req.method === this.method && this._validPattern(req.url, req)) {
       res.routeMatched = this
       compose(this.callbacks, context)(...args)
     } else {
