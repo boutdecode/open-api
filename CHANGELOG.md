@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/boutdecode/open-api/compare/v1.0.1...v1.1.0) (2024-03-15)
+
+
+### Features
+
+* Add security ([01b3a14](https://github.com/boutdecode/open-api/commit/01b3a1421c769551336446b80a32d550d9051a69))
+
 ## [1.0.1](https://github.com/boutdecode/open-api/compare/v1.0.0...v1.0.1) (2024-03-04)
 
 
