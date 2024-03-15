@@ -10,6 +10,7 @@ const wrapResponse = require('./response')
 const validatePath = require('../middlewares/validate-path')
 const validateQuery = require('../middlewares/validate-query')
 const validateBody = require('../middlewares/validate-body')
+const validateSecurity = require('../middlewares/validate-security')
 
 const defaultGetPath = {
   responses: {
@@ -57,7 +58,7 @@ const defaultDeletePath = {
  * Core API module of yion
  *
  * @example
- * const { createApi} = require('yion')
+ * const { createApi } = require('yion')
  *
  * const app = createApi()
  * app.get('/ping', {}, (req, res) => res.send({message: 'pong'}))
@@ -68,6 +69,7 @@ class Api extends Middleware {
 
     this.apiValidator = new SwaggerParser()
     this.middlewares = []
+    this.securityMiddlewares = {}
     this.openApi = {
       openapi: '3.0.3',
       ...openapi,
@@ -77,6 +79,27 @@ class Api extends Middleware {
         schemas: {}
       }
     }
+  }
+
+  get paths () {
+    return this.openApi.paths || {}
+  }
+
+  get schemas () {
+    return this.openApi.components.schemas || {}
+  }
+
+  get components () {
+    return this.openApi.components || {}
+  }
+
+  get securitySchemes () {
+    return this.openApi.components.securitySchemes || {}
+  }
+
+  addSecurity (name, schema, callback) {
+    this.openApi.components.securitySchemes[name] = schema
+    this.securityMiddlewares[name] = callback
   }
 
   addPath (path, options) {
@@ -127,7 +150,10 @@ class Api extends Middleware {
    */
   get (pattern, schemas, ...callbacks) {
     this.addPath(pattern, { method: 'get', ...defaultGetPath, ...schemas })
+
+    const { security } = schemas
     const middlewares = [
+      security ? validateSecurity(security) : (context, next) => next(),
       validatePath(schemas),
       validateQuery(schemas),
       validateBody(schemas),
@@ -149,7 +175,10 @@ class Api extends Middleware {
    */
   post (pattern, schemas, ...callbacks) {
     this.addPath(pattern, { method: 'post', ...defaultPostPath, ...schemas })
+
+    const { security } = schemas
     const middlewares = [
+      security ? validateSecurity(security) : (context, next) => next(),
       validatePath(schemas),
       validateQuery(schemas),
       validateBody(schemas),
@@ -171,7 +200,10 @@ class Api extends Middleware {
    */
   delete (pattern, schemas, ...callbacks) {
     this.addPath(pattern, { method: 'delete', ...defaultDeletePath, ...schemas })
+
+    const { security } = schemas
     const middlewares = [
+      security ? validateSecurity(security) : (context, next) => next(),
       validatePath(schemas),
       validateQuery(schemas),
       validateBody(schemas),
@@ -193,7 +225,10 @@ class Api extends Middleware {
    */
   put (pattern, schemas, ...callbacks) {
     this.addPath(pattern, { method: 'put', ...defaultPostPath, ...schemas })
+
+    const { security } = schemas
     const middlewares = [
+      security ? validateSecurity(security) : (context, next) => next(),
       validatePath(schemas),
       validateQuery(schemas),
       validateBody(schemas),
@@ -215,7 +250,10 @@ class Api extends Middleware {
    */
   patch (pattern, schemas, ...callbacks) {
     this.addPath(pattern, { method: 'patch', ...defaultPostPath, ...schemas })
+
+    const { security } = schemas
     const middlewares = [
+      security ? validateSecurity(security) : (context, next) => next(),
       validatePath(schemas),
       validateQuery(schemas),
       validateBody(schemas),
