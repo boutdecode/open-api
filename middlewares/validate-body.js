@@ -4,7 +4,7 @@ const BadRequestError = require('../src/errors/bad-request')
 module.exports = (schemas) => (context, next) => {
   const { req } = context
   const requestBody = schemas.requestBody
-  const contentType = req.headers['content-type']
+  const contentType = (req.headers['content-type'] || '').split(';')[0].trim()
   let body = null
 
   if (requestBody) {

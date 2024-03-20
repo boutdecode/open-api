@@ -17,6 +17,8 @@ module.exports = {
         return this._parseDate(data, 'date-time')
       case 'byte':
         return this._parseBase64(data)
+      case 'binary':
+        return data
       default:
         return String(data)
     }
