@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/boutdecode/open-api/compare/v1.1.0...v1.1.1) (2024-03-20)
+
+
+### Bug Fixes
+
+* Binary string and multipart/form-data ([eec7fed](https://github.com/boutdecode/open-api/commit/eec7fedd76ae778ba5dfe4887c85602a3c0e4c79))
+
 # [1.1.0](https://github.com/boutdecode/open-api/compare/v1.0.1...v1.1.0) (2024-03-15)
 
 
