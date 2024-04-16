@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/boutdecode/open-api/compare/v1.1.1...v1.1.2) (2024-04-16)
+
+
+### Bug Fixes
+
+* Add schemas to send response method ([a5d9a84](https://github.com/boutdecode/open-api/commit/a5d9a842c54496d313d58838669b68790a78680a))
+
 ## [1.1.1](https://github.com/boutdecode/open-api/compare/v1.1.0...v1.1.1) (2024-03-20)
 
 
