@@ -3,9 +3,8 @@ const factory = require('./factory')
 
 /**
  * @param {ServerResponse} res
- * @param {Object} [schemas={}]
  */
-module.exports = function (res, schemas = {}) {
+module.exports = function (res) {
   Object.defineProperties(res, {
     /**
      * Generate response from route, status and mimetype
@@ -14,7 +13,8 @@ module.exports = function (res, schemas = {}) {
      * @param {string|null} [statusMessage=null]
      */
     send: {
-      value: function (data = null, status = null, statusMessage = null) {
+      value: function (data = null, status = 200, statusMessage = 'Ok') {
+        const schemas = this.routeMatched.schema || {}
         const response = schemas.responses ? schemas.responses[status] : null
         const mimetype = 'application/json'
 

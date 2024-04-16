@@ -160,7 +160,7 @@ class Api extends Middleware {
       ...callbacks
     ].map(fct => new Middleware(fct))
 
-    this.middlewares.push(new Route('GET', pattern, middlewares))
+    this.middlewares.push(new Route('GET', pattern, schemas, middlewares))
 
     return this
   }
@@ -185,7 +185,7 @@ class Api extends Middleware {
       ...callbacks
     ].map(fct => new Middleware(fct))
 
-    this.middlewares.push(new Route('POST', pattern, middlewares))
+    this.middlewares.push(new Route('POST', pattern, schemas, middlewares))
 
     return this
   }
@@ -210,7 +210,7 @@ class Api extends Middleware {
       ...callbacks
     ].map(fct => new Middleware(fct))
 
-    this.middlewares.push(new Route('DELETE', pattern, middlewares))
+    this.middlewares.push(new Route('DELETE', pattern, schemas, middlewares))
 
     return this
   }
@@ -235,7 +235,7 @@ class Api extends Middleware {
       ...callbacks
     ].map(fct => new Middleware(fct))
 
-    this.middlewares.push(new Route('PUT', pattern, middlewares))
+    this.middlewares.push(new Route('PUT', pattern, schemas, middlewares))
 
     return this
   }
@@ -260,7 +260,7 @@ class Api extends Middleware {
       ...callbacks
     ].map(fct => new Middleware(fct))
 
-    this.middlewares.push(new Route('PATCH', pattern, middlewares))
+    this.middlewares.push(new Route('PATCH', pattern, schemas, middlewares))
 
     return this
   }

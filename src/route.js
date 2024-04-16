@@ -6,11 +6,13 @@ class Route {
   /**
    * @param {string} method - the request method
    * @param {string} pattern - the route pattern
+   * @param {object} schemas - the route schemas
    * @param {Array<Middleware>} callbacks
    */
-  constructor (method, pattern, callbacks) {
+  constructor (method, pattern, schemas, callbacks) {
     this.method = method
     this.pattern = pattern
+    this.schema = schemas
     this.callbacks = callbacks
   }
 
