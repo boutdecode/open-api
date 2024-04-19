@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/boutdecode/open-api/compare/v1.1.2...v1.1.3) (2024-04-19)
+
+
+### Bug Fixes
+
+* Catch error and code ([f2e4da6](https://github.com/boutdecode/open-api/commit/f2e4da60875a727f7fd92e0e783608ead19a061b))
+
 ## [1.1.2](https://github.com/boutdecode/open-api/compare/v1.1.1...v1.1.2) (2024-04-16)
 
 
