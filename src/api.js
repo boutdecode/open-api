@@ -293,7 +293,7 @@ class Api extends Middleware {
     try {
       compose(this.middlewares, context, next)(...args)
     } catch (e) {
-      res.status(e.code || 500).send({ error: e.message })
+      res.send({ error: e.message || 'Internal server error', code: e.code || 500 }, e.code || 500, e.message || 'Internal server error')
     }
   }
 }
