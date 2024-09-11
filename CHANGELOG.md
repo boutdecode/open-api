@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/boutdecode/open-api/compare/v1.1.3...v1.2.0) (2024-09-11)
+
+
+### Features
+
+* Add CORS plugin ([f739aa0](https://github.com/boutdecode/open-api/commit/f739aa0f73ca80beea6048aa7cbf0fad09492b9e))
+
 ## [1.1.3](https://github.com/boutdecode/open-api/compare/v1.1.2...v1.1.3) (2024-04-19)
 
 
