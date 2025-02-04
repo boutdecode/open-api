@@ -15,6 +15,8 @@ $ npm install @boutdecode/open-api
 For yion : 
 
 ```javascript
+OUTDATED !!! README WIP
+
 const { createApp, createServer } = require('@boutdecode/yion')
 const { createApi } = require('@boutdecode/open-api')
 const openApiDoc = require('@boutdecode/open-api/plugins/open-api-doc')
