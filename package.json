@@ -4,7 +4,7 @@
   "description": "Open API lib by boutdecode for Yion",
   "main": "src/index.js",
   "scripts": {
-    "test": "npm run cs",
+    "test": "npm run lint",
     "lint": "eslint src plugins middlewares"
   },
   "repository": {
