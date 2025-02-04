@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/boutdecode/open-api/compare/v1.2.0...v2.0.0) (2025-02-04)
+
+
+### Features
+
+* Use new schema validation system with Zod ([e21d485](https://github.com/boutdecode/open-api/commit/e21d4857a4e5f5263583b93940744b144d08f4da))
+
+
+### BREAKING CHANGES
+
+* Delete custom validator
+
 # [1.2.0](https://github.com/boutdecode/open-api/compare/v1.1.3...v1.2.0) (2024-09-11)
 
 
