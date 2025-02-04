@@ -1,16 +1,18 @@
-const validator = require('../validators/validator')
+const BadRequestError = require('../src/errors/bad-request')
 
-module.exports = (schemas = {}) => (context, next) => {
+module.exports = (schema = {}) => (context, next) => {
+  const { input } = schema
+  if (!input || !input.path) {
+    return next()
+  }
+
   const { req } = context
+  const { success, data, error } = input.path.safeParse(req.params)
+  if (!success) {
+    throw new BadRequestError('Invalid "path" input data', error.issues)
+  }
 
-  const schemaModel = { properties: {} };
-  (schemas.parameters || [])
-    .filter(parameter => parameter.in === 'path')
-    .forEach(({ name, schema, required }) => {
-      schemaModel.properties[name] = { ...schema, required }
-    })
-
-  req.params = validator.validate(req.params, schemaModel)
+  req.params = data
 
   next()
 }

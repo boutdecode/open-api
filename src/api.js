@@ -1,4 +1,4 @@
-const SwaggerParser = require('@apidevtools/swagger-parser')
+const { createDocument } = require('zod-openapi')
 
 const assert = require('node:assert')
 
@@ -67,7 +67,6 @@ class Api extends Middleware {
   constructor ({ openapi = { info: { version: '1.0.0', title: 'Yion API' } } } = {}) {
     super(null)
 
-    this.apiValidator = new SwaggerParser()
     this.middlewares = []
     this.securityMiddlewares = {}
     this.openApi = {
@@ -116,12 +115,16 @@ class Api extends Middleware {
       ...options
     }
 
-    this.apiValidator.validate(this.openApi, (err, api) => {
-      if (err) {
-        throw new Error(err)
-      }
-      this.openApi = api
-    })
+    /** Ordered paths **/
+    this.openApi.paths = Object.keys(this.openApi.paths).sort().reduce(
+      (obj, key) => {
+        obj[key] = this.openApi.paths[key]
+        return obj
+      },
+      {}
+    )
+
+    this.openApi = createDocument(this.openApi)
   }
 
   addSchemas (name, schemas) {
@@ -149,11 +152,14 @@ class Api extends Middleware {
    * @return {Api}
    */
   get (pattern, schemas, ...callbacks) {
-    this.addPath(pattern, { method: 'get', ...defaultGetPath, ...schemas })
+    const { security, openapi } = schemas
+    if (openapi) {
+      defaultGetPath.requestParams = schemas.input
+      this.addPath(pattern, { method: 'get', ...defaultGetPath, ...openapi })
+    }
 
-    const { security } = schemas
     const middlewares = [
-      security ? validateSecurity(security) : (context, next) => next(),
+      security ? validateSecurity(security) : (_, next) => next(),
       validatePath(schemas),
       validateQuery(schemas),
       validateBody(schemas),
@@ -174,9 +180,12 @@ class Api extends Middleware {
    * @return {Api}
    */
   post (pattern, schemas, ...callbacks) {
-    this.addPath(pattern, { method: 'post', ...defaultPostPath, ...schemas })
+    const { security, openapi } = schemas
+    if (openapi) {
+      defaultGetPath.requestParams = schemas.input
+      this.addPath(pattern, { method: 'post', ...defaultPostPath, ...openapi })
+    }
 
-    const { security } = schemas
     const middlewares = [
       security ? validateSecurity(security) : (context, next) => next(),
       validatePath(schemas),
@@ -199,9 +208,12 @@ class Api extends Middleware {
    * @return {Api}
    */
   delete (pattern, schemas, ...callbacks) {
-    this.addPath(pattern, { method: 'delete', ...defaultDeletePath, ...schemas })
+    const { security, openapi } = schemas
+    if (openapi) {
+      defaultGetPath.requestParams = schemas.input
+      this.addPath(pattern, { method: 'delete', ...defaultDeletePath, ...openapi })
+    }
 
-    const { security } = schemas
     const middlewares = [
       security ? validateSecurity(security) : (context, next) => next(),
       validatePath(schemas),
@@ -224,9 +236,12 @@ class Api extends Middleware {
    * @return {Api}
    */
   put (pattern, schemas, ...callbacks) {
-    this.addPath(pattern, { method: 'put', ...defaultPostPath, ...schemas })
+    const { security, openapi } = schemas
+    if (openapi) {
+      defaultGetPath.requestParams = schemas.input
+      this.addPath(pattern, { method: 'put', ...defaultPostPath, ...openapi })
+    }
 
-    const { security } = schemas
     const middlewares = [
       security ? validateSecurity(security) : (context, next) => next(),
       validatePath(schemas),
@@ -249,9 +264,12 @@ class Api extends Middleware {
    * @return {Api}
    */
   patch (pattern, schemas, ...callbacks) {
-    this.addPath(pattern, { method: 'patch', ...defaultPostPath, ...schemas })
+    const { security, openapi } = schemas
+    if (openapi) {
+      defaultGetPath.requestParams = schemas.input
+      this.addPath(pattern, { method: 'patch', ...defaultPostPath, ...openapi })
+    }
 
-    const { security } = schemas
     const middlewares = [
       security ? validateSecurity(security) : (context, next) => next(),
       validatePath(schemas),
@@ -264,19 +282,6 @@ class Api extends Middleware {
 
     return this
   }
-
-  /**
-   * Add Group listener
-   * @param {string} prefix - the route prefix
-   *
-   * @returns {Group}
-   */
-  /* group(prefix) {
-    const group = new Group(prefix)
-    this.middlewares.push(group)
-
-    return group
-  } */
 
   /**
    * @param {Object} context
@@ -293,7 +298,14 @@ class Api extends Middleware {
     try {
       compose(this.middlewares, context, next)(...args)
     } catch (e) {
-      res.send({ error: e.message || 'Internal server error', code: e.code || 500 }, e.code || 500, e.message || 'Internal server error')
+      res.send({
+        error: e.message || 'Internal server error',
+        details: e.details || e.stack || e,
+        code: e.code || 500
+      },
+      e.code || 500,
+      e.message || 'Internal server error'
+      )
     }
   }
 }

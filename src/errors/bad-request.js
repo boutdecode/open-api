@@ -1,7 +1,7 @@
-module.exports = class BadRequestError extends Error {
-  constructor (message, code = 400) {
-    super(message)
+const HttpError = require('./http-error')
 
-    this.code = code
+module.exports = class BadRequestError extends HttpError {
+  constructor (message, details = {}, code = 400) {
+    super(message, details, code)
   }
 }

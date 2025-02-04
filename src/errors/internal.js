@@ -1,7 +1,7 @@
-module.exports = class InternalError extends Error {
-  constructor (message, code = 500) {
-    super(message)
+const HttpError = require('./http-error')
 
-    this.code = code
+module.exports = class InternalError extends HttpError {
+  constructor (message, details, code = 500) {
+    super(message, details, code)
   }
 }

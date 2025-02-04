@@ -1,5 +1,5 @@
 const writer = require('./writers/writer')
-const factory = require('./factory')
+const InternalError = require('./errors/internal')
 
 /**
  * @param {ServerResponse} res
@@ -14,26 +14,17 @@ module.exports = function (res) {
      */
     send: {
       value: function (data = null, status = 200, statusMessage = 'Ok') {
-        const schemas = this.routeMatched.schema || {}
-        const response = schemas.responses ? schemas.responses[status] : null
+        const schema = this.routeMatched?.schema?.output || null
         const mimetype = 'application/json'
 
         let model = data
-        if (response && response.content) {
-          // if (req.headers['accept'] && req.headers['accept'] !== '*/*') {
-          //    mimetype = req.headers['accept'];
-          // }
-
-          // if (req.headers['accept'] && !response.content[mimetype]) {
-          //    throw new BadRequestError('Not Acceptable', 406);
-          // }
-
-          const content = response.content[mimetype]
-          if (content.schema.type === 'object') {
-            model = factory.createFromModel(data, content.schema, true)
-          } else if (content.schema.type === 'array' && Array.isArray(data)) {
-            model = data.map(item => factory.createFromModel(item, content.schema.items, true))
+        if (schema && !data.error) {
+          const { success, data: validatedData, error } = schema.safeParse(data)
+          if (!success) {
+            throw new InternalError('Invalid response data', error.issues)
           }
+
+          model = validatedData
         }
 
         writer.write(res, model, mimetype, status || res.statusCode, statusMessage || res.statusMessage)

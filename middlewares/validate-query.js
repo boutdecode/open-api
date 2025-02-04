@@ -1,16 +1,18 @@
-const validator = require('../validators/validator')
+const BadRequestError = require('../src/errors/bad-request')
 
-module.exports = (schemas = {}) => (context, next) => {
+module.exports = (schema = {}) => (context, next) => {
+  const { input } = schema
+  if (!input || !input.query) {
+    return next()
+  }
+
   const { req } = context
+  const { success, data, error } = input.query.safeParse(req.query)
+  if (!success) {
+    throw new BadRequestError('Invalid "query" input data', error.issues)
+  }
 
-  const schemaModel = { properties: {} };
-  (schemas.parameters || [])
-    .filter(parameter => parameter.in === 'query')
-    .forEach(({ name, schema, required }) => {
-      schemaModel.properties[name] = { ...schema, required }
-    })
-
-  req.query = validator.validate(req.query, schemaModel)
+  req.query = data
 
   next()
 }

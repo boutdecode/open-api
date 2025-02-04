@@ -1,21 +1,18 @@
-const validator = require('../validators/validator')
 const BadRequestError = require('../src/errors/bad-request')
 
-module.exports = (schemas) => (context, next) => {
-  const { req } = context
-  const requestBody = schemas.requestBody
-  const contentType = (req.headers['content-type'] || '').split(';')[0].trim()
-  let body = null
-
-  if (requestBody) {
-    if (!requestBody.content[contentType]) {
-      throw new BadRequestError(`Bad content type, please use ${Object.keys(requestBody.content).join()}`)
-    }
-
-    body = validator.validate(req.body, requestBody.content[contentType].schema)
+module.exports = (schema = {}) => (context, next) => {
+  const { input } = schema
+  if (!input || !input.body) {
+    return next()
   }
 
-  req.body = body
+  const { req } = context
+  const { success, data, error } = input.body.safeParse(req.params)
+  if (!success) {
+    throw new BadRequestError('Invalid "body" input data', error.issues)
+  }
+
+  req.body = data
 
   next()
 }

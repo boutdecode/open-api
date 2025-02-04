@@ -5,8 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "npm run cs",
-    "fix-cs": "eslint --fix src plugins middlewares validators",
-    "cs": "eslint plugins middlewares validators"
+    "lint": "eslint src plugins middlewares"
   },
   "repository": {
     "type": "git",
@@ -19,7 +18,8 @@
     "eslint-config-standard": "^17.1.0"
   },
   "dependencies": {
-    "@apidevtools/swagger-parser": "^10.1.0",
-    "swagger-ui-dist": "^5.11.8"
+    "swagger-ui-dist": "^5.11.8",
+    "zod": "^3.24.1",
+    "zod-openapi": "^4.2.3"
   }
 }
