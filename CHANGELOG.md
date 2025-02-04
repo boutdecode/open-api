@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/boutdecode/open-api/compare/v2.0.0...v2.0.1) (2025-02-04)
+
+
+### Bug Fixes
+
+* Outdated readme ([e53ca1e](https://github.com/boutdecode/open-api/commit/e53ca1ee3c0e789c10df0f442ef2c244a0d6edc6))
+
 # [2.0.0](https://github.com/boutdecode/open-api/compare/v1.2.0...v2.0.0) (2025-02-04)
 
 
