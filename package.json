@@ -1,6 +1,6 @@
 {
   "name": "@boutdecode/open-api",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Open API lib by boutdecode for Yion",
   "main": "src/index.js",
   "scripts": {

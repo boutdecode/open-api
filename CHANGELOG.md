@@ -1,3 +1,10 @@
+## [2.0.2](https://github.com/boutdecode/open-api/compare/v2.0.1...v2.0.2) (2025-03-03)
+
+
+### Bug Fixes
+
+* requestParams ([c168f1b](https://github.com/boutdecode/open-api/commit/c168f1b5d9e4b3c753710bd767590e9712541c7a))
+
 ## [2.0.1](https://github.com/boutdecode/open-api/compare/v2.0.0...v2.0.1) (2025-02-04)
 
 
