@@ -182,7 +182,12 @@ class Api extends Middleware {
   post (pattern, schemas, ...callbacks) {
     const { security, openapi } = schemas
     if (openapi) {
+      const { body } = schemas?.input || {}
       defaultPostPath.requestParams = schemas.input
+      if (body) {
+        defaultPostPath.requestBody = { content: { 'application/json': { schema: body } } }
+      }
+
       this.addPath(pattern, { method: 'post', ...defaultPostPath, ...openapi })
     }
 
@@ -238,7 +243,12 @@ class Api extends Middleware {
   put (pattern, schemas, ...callbacks) {
     const { security, openapi } = schemas
     if (openapi) {
+      const { body } = schemas?.input || {}
       defaultPostPath.requestParams = schemas.input
+      if (body) {
+        defaultPostPath.requestBody = { content: { 'application/json': { schema: body } } }
+      }
+
       this.addPath(pattern, { method: 'put', ...defaultPostPath, ...openapi })
     }
 
@@ -266,7 +276,12 @@ class Api extends Middleware {
   patch (pattern, schemas, ...callbacks) {
     const { security, openapi } = schemas
     if (openapi) {
+      const { body } = schemas?.input || {}
       defaultPostPath.requestParams = schemas.input
+      if (body) {
+        defaultPostPath.requestBody = { content: { 'application/json': { schema: body } } }
+      }
+
       this.addPath(pattern, { method: 'patch', ...defaultPostPath, ...openapi })
     }
 

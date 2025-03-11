@@ -7,7 +7,7 @@ module.exports = (schema = {}) => (context, next) => {
   }
 
   const { req } = context
-  const { success, data, error } = input.body.safeParse(req.params)
+  const { success, data, error } = input.body.safeParse(req.body)
   if (!success) {
     throw new BadRequestError('Invalid "body" input data', error.issues)
   }
