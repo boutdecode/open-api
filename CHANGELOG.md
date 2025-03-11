@@ -1,3 +1,10 @@
+## [2.0.3](https://github.com/boutdecode/open-api/compare/v2.0.2...v2.0.3) (2025-03-11)
+
+
+### Bug Fixes
+
+* Divers ([2e40005](https://github.com/boutdecode/open-api/commit/2e4000525ec7a9c59d06d064b1c9cc1e2e892ee4))
+
 ## [2.0.2](https://github.com/boutdecode/open-api/compare/v2.0.1...v2.0.2) (2025-03-03)
 
 
