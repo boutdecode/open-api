@@ -1,3 +1,10 @@
+## [2.0.4](https://github.com/boutdecode/open-api/compare/v2.0.3...v2.0.4) (2025-06-24)
+
+
+### Bug Fixes
+
+* Add security to addPath ([5760f0e](https://github.com/boutdecode/open-api/commit/5760f0eed4efaf09a12e45e881e9f66952fa0802))
+
 ## [2.0.3](https://github.com/boutdecode/open-api/compare/v2.0.2...v2.0.3) (2025-03-11)
 
 
