@@ -155,7 +155,7 @@ class Api extends Middleware {
     const { security, openapi } = schemas
     if (openapi) {
       defaultGetPath.requestParams = schemas.input
-      this.addPath(pattern, { method: 'get', ...defaultGetPath, ...openapi })
+      this.addPath(pattern, { method: 'get', ...defaultGetPath, ...{ security }, ...openapi })
     }
 
     const middlewares = [
@@ -188,7 +188,7 @@ class Api extends Middleware {
         defaultPostPath.requestBody = { content: { 'application/json': { schema: body } } }
       }
 
-      this.addPath(pattern, { method: 'post', ...defaultPostPath, ...openapi })
+      this.addPath(pattern, { method: 'post', ...defaultPostPath, ...{ security }, ...openapi })
     }
 
     const middlewares = [
@@ -216,7 +216,7 @@ class Api extends Middleware {
     const { security, openapi } = schemas
     if (openapi) {
       defaultDeletePath.requestParams = schemas.input
-      this.addPath(pattern, { method: 'delete', ...defaultDeletePath, ...openapi })
+      this.addPath(pattern, { method: 'delete', ...defaultDeletePath, ...{ security }, ...openapi })
     }
 
     const middlewares = [
@@ -249,7 +249,7 @@ class Api extends Middleware {
         defaultPostPath.requestBody = { content: { 'application/json': { schema: body } } }
       }
 
-      this.addPath(pattern, { method: 'put', ...defaultPostPath, ...openapi })
+      this.addPath(pattern, { method: 'put', ...defaultPostPath, ...{ security }, ...openapi })
     }
 
     const middlewares = [
@@ -282,7 +282,7 @@ class Api extends Middleware {
         defaultPostPath.requestBody = { content: { 'application/json': { schema: body } } }
       }
 
-      this.addPath(pattern, { method: 'patch', ...defaultPostPath, ...openapi })
+      this.addPath(pattern, { method: 'patch', ...defaultPostPath, ...{ security }, ...openapi })
     }
 
     const middlewares = [
